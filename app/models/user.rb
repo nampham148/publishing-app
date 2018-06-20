@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable, :confirmable,
          :omniauthable, :omniauth_providers => [:facebook]
   has_many :posts
-  validates :name, presence: true
+  validates :name, presence: true, on: :create
 
   def self.new_with_session(params, session)
 	  super.tap do |user|
