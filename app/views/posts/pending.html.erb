@@ -1,5 +1,7 @@
 <h1> Pending posts </h1>
 
-<ol class="posts">
-	<%= render @posts %>
+<ol class="posts" id="pending-posts">
+  <%= render @posts, post_time: "created_at", action: "Submitted" %>
 </ol> 
+
+<%= will_paginate @posts %>

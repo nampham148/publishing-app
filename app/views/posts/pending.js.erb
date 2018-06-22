@@ -1,0 +1,7 @@
+$('#pending-posts').append('<%= j render(@posts, post_time: "created_at", action: "Submitted") %>');
+<% if @posts.next_page %>
+  $('.pagination').replaceWith('<%= j will_paginate(@posts) %>');
+<% else %>
+  $('.pagination').remove();
+<% end %>
+<% sleep 1 %>

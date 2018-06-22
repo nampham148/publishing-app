@@ -8,6 +8,7 @@
           <% if current_user.admin? %>
             <li><%= link_to "Pending posts", pending_posts_path %></li>
           <% end %>
+          <li><%= link_to "View your profile", current_user %></li>
           <li><%= link_to "Log out", destroy_user_session_path, method: :delete %></li>
         <% else %>
           <li><%= link_to "Log in", new_user_session_path %></li>

@@ -1,5 +1,7 @@
 {
   "name": "publishing_app",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "coffee-script": "^1.12.7"
+  }
 }

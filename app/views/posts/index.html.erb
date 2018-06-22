@@ -1,5 +1,7 @@
 <h1> News Feed </h1>
 
-<ol class="posts">
-	<%= render @posts %>	
+<ol class="posts" id="posts">
+  <%= render @posts, post_time: "posted_at", action: "Posted" %>  
 </ol>
+
+<%= will_paginate %>

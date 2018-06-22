@@ -5,7 +5,8 @@ class PostsController < ApplicationController
   before_action :admin, only: [:pending, :approve]
 
   def index
-    @posts = Post.where(approved: true)
+    @posts = Post.where("approved = ? and to_post < ?", true, Time.current).
+                  order(post_date: :desc, vote: :desc).page(params[:page]).per_page(10)
   end
 
   def show
@@ -14,11 +15,11 @@ class PostsController < ApplicationController
   def create
     @post = current_user.posts.build(post_params)
     if @post.save
-      flash[:success] = "Successfully posted!"
+      flash[:info] = "Your post is waiting to be reviewed by admins"
     else
-      flash[:danger] = "Can't save!"
+      flash[:danger] = "Can't save! Please fill in all the fields"
     end
-    redirect_to current_user
+    redirect_to current_user    
   end
 
   def edit
@@ -31,7 +32,7 @@ class PostsController < ApplicationController
   end
 
   def pending
-    @posts = Post.where(approved:false)
+    @posts = Post.where(approved:false).order(created_at: :desc).page(params[:page]).per_page(10)
   end
 
   def approve
@@ -40,7 +41,11 @@ class PostsController < ApplicationController
       flash[:info] = "Post has already been approved"
       redirect_to root_url
     else
-      @post.update_attributes(approved: true)
+      #update approved states and posted_at time
+      @post.update_attributes(approved: true, approved_at: Time.zone.now)
+      posted_at = @post.to_post < @post.approved_at ? @post.approved_at : @post.to_post
+      @post.update_attributes(posted_at: posted_at, post_date: posted_at.to_date)
+      
       flash[:success] = "Approved Post!"
       redirect_to root_url
     end

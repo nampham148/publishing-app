@@ -7,4 +7,5 @@ Rails.application.routes.draw do
     post 'approve', on: :member
   end
   resources :users, only: [:show, :index]
+  resources :vote_relationships, only: [:create, :destroy]
 end

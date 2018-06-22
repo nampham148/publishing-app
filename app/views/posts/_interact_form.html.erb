@@ -1,0 +1,10 @@
+<% if current_user.like?(post) %>
+  <%= link_to "Unlike Post", vote_relationship_path(current_user.positive_relationships.find_by(post_id: post.id)), method: :delete %> |
+  <%= link_to "Dislike Post", vote_relationships_path(relationships: {like: 0, post_id: post.id}), method: :post %>
+<% elsif current_user.dislike?(post) %>
+  <%= link_to "Like Post", vote_relationships_path(relationships: {like: 1, post_id: post.id}), method: :post %> |
+  <%= link_to "Undislike Post", vote_relationship_path(current_user.negative_relationships.find_by(post_id: post.id)), method: :delete %>
+<% else %>
+  <%= link_to "Like Post", vote_relationships_path(relationships: {like: 1, post_id: post.id}), method: :post %> |
+  <%= link_to "Dislike Post", vote_relationships_path(relationships: {like: 0, post_id: post.id}), method: :post %>
+<% end %>

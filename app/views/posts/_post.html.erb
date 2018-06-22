@@ -5,9 +5,16 @@
     <%= post.content %>
   </span>
   <span class="timestamp">
-    Posted <%= time_ago_in_words(post.created_at) %> ago.  
+    <%= action %> <%= time_ago_in_words(post.send(post_time)) %> ago.
     <% if current_user.admin? && !post.approved? %> |
-    	<%= link_to "approve", approve_post_path(post), method: :post %>
+      <%= link_to "approve", approve_post_path(post), method: :post %>
     <% end %>
+    <% if post.approved? %> 
+      <% if current_user != post.user %> |
+        <%= render 'posts/interact_form', post: post %>
+      <% end %>
+      | Popularity: <%= post.vote %>
+    <% end %>
+    
   </span>
 </li>
