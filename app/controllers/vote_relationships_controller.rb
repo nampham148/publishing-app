@@ -2,9 +2,9 @@ class VoteRelationshipsController < ApplicationController
   before_action :logged_in_user
 
   def create
-    @post = Post.find(params[:relationships][:post_id])
+    @post = Post.find(params[:post_id])
     if @post.approved?
-      if params[:relationships][:like] == "1"
+      if params[:like] == "1"
         current_user.like(@post)
         update_vote
       else
@@ -14,14 +14,20 @@ class VoteRelationshipsController < ApplicationController
     else
       raise "Post is not approved"
     end
-    redirect_to root_url
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def destroy
     @post = VoteRelationship.find(params[:id]).post
     current_user.neutralize(@post)
     update_vote
-    redirect_to root_url
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   private

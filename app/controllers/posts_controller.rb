@@ -10,6 +10,7 @@ class PostsController < ApplicationController
   end
 
   def show
+    @post = Post.find(params[:id])
   end
 
   def create
@@ -17,7 +18,7 @@ class PostsController < ApplicationController
     if @post.save
       flash[:info] = "Your post is waiting to be reviewed by admins"
     else
-      flash[:danger] = "Can't save! Please fill in all the fields"
+      flash[:danger] = "Can't post!"
     end
     redirect_to current_user    
   end
@@ -26,9 +27,19 @@ class PostsController < ApplicationController
   end
 
   def update
+    if @post.update_attributes(post_params)
+      flash[:success] = "Post updated"
+      redirect_to @post
+    else
+      render 'edit'
+    end
   end
 
   def destroy
+    @post.destroy
+    flash[:success] = "Successfully deleted"
+    #PROBABLY SHOULD CHANGE THIS
+    redirect_to root_url
   end
 
   def pending
@@ -53,7 +64,7 @@ class PostsController < ApplicationController
 
   private
     def post_params
-      params.require(:post).permit(:content, :to_post)
+      params.require(:post).permit(:title, :content, :to_post)
     end
 
     def logged_in_user

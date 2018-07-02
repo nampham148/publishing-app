@@ -12,16 +12,7 @@
       </h3>
     </section>
       <% if current_user == @user %>
-        <%= form_for(@post) do |f| %>
-          <div class="field">
-            <%= f.text_area :content, placeholder: "Write a new post..." %>
-          </div>
-          <div class="field">
-            <%= f.label :to_post %>
-            <%= f.datetime_local_field :to_post %>
-          </div>
-          <%= f.submit "Post", class: "btn btn-primary" %>
-        <% end %>
+        <%= render 'posts/post_form' %>
       <% end %>
     </div> 
     <div class="col-md-8">

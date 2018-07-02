@@ -1,0 +1,2 @@
+$("#interact-form-" + <%= @post.id %>).html("<%= escape_javascript(render('posts/interact_form', post: @post)) %>");
+$("#vote-" + <%= @post.id %>).html('Popularity: <%= @post.vote %>');

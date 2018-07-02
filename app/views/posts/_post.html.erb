@@ -2,7 +2,7 @@
   <%= link_to image_tag(post.user.image, alt: "User's image", size: 50), post.user %>
   <span class="user"><%= link_to post.user.name, post.user %></span>
   <span class="content">
-    <%= post.content %>
+    <%= link_to post.title, post %>
   </span>
   <span class="timestamp">
     <%= action %> <%= time_ago_in_words(post.send(post_time)) %> ago.
@@ -10,10 +10,15 @@
       <%= link_to "approve", approve_post_path(post), method: :post %>
     <% end %>
     <% if post.approved? %> 
-      <% if current_user != post.user %> |
+      <% if current_user != post.user %>
         <%= render 'posts/interact_form', post: post %>
       <% end %>
-      | Popularity: <%= post.vote %>
+      <%= content_tag :div, id: "vote-#{post.id}" do %>
+        Popularity: <%= post.vote %>
+      <% end %>
+      <% if current_user == post.user || current_user.admin? %>
+        <%= render 'posts/edit_delete', post: post %>
+      <% end %>
     <% end %>
     
   </span>

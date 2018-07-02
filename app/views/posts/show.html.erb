@@ -1,2 +1,14 @@
-<h1>Posts#show</h1>
-<p>Find me in app/views/posts/show.html.erb</p>
+<h1> <%= @post.title %> </h1>
+<p> <%= simple_format(@post.content) %> </p>
+
+<%= content_tag :div, id: "vote-#{@post.id}" do %>
+  Popularity: <%= @post.vote %>
+<% end %>
+
+<% if current_user != @post.user %>
+  <%= render 'posts/interact_form', post: @post %>
+<% end %>
+
+<% if current_user == @post.user || current_user.admin? %>
+  <%= render 'posts/edit_delete', post: @post %>
+<% end %>

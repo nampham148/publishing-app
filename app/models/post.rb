@@ -9,6 +9,7 @@ class Post < ApplicationRecord
   validates :content, presence: true
   validates :user_id, presence: true
   validates :to_post, presence: true
+  validate :to_post_valid?
 
   def post_date
     posted_at.to_date
@@ -16,5 +17,11 @@ class Post < ApplicationRecord
 
   def popularity
     self.like_users.count - self.dislike_users.count
+  end
+
+  def to_post_valid?
+    if to_post < Time.now
+      errors.add(:to_post, "must be later than now")
+    end
   end
 end

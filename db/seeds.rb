@@ -26,9 +26,10 @@ end
 
 users = User.order(:created_at).take(6)
 10.times do
-  content = Faker::Lorem.sentence(5)
+  title = Faker::Lorem.sentence(5)
+  content = Faker::Lorem.paragraphs(10).join("\r\n\r\n")
   users.each do |user| 
-    post = user.posts.create!(content: content, to_post: Time.zone.now, 
+    post = user.posts.create!(title: title, content: content, to_post: Time.zone.now, 
                               posted_at: Time.zone.now, approved: true, 
                               post_date: Date.today)
   end
@@ -36,9 +37,10 @@ end
 
 users = User.order(:created_at).take(6)
 10.times do
-  content = Faker::Lorem.sentence(5)
+  title = Faker::Lorem.sentence(5)
+  content = Faker::Lorem.paragraphs(10).join("\r\n\r\n")
   users.each do |user| 
-    post = user.posts.create!(content: content, to_post: Time.zone.now, 
+    post = user.posts.create!(title: title, content: content, to_post: Time.zone.now, 
                               posted_at: 1.day.ago, approved: true, 
                               post_date: Date.yesterday)
   end
@@ -46,8 +48,9 @@ end
 
 users = User.order(:created_at).take(6)
 50.times do
-  content = Faker::Lorem.sentence(5)
+  title = Faker::Lorem.sentence(5)
+  content = Faker::Lorem.paragraphs(10).join("\r\n\r\n")
   users.each do |user| 
-    post = user.posts.create!(content: content, to_post: Time.zone.now)
+    post = user.posts.create!(title: title, content: content, to_post: Time.zone.now)
   end
 end
