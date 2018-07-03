@@ -9,7 +9,7 @@ class VoteRelationship < ApplicationRecord
   private
     def different_user
       if self.post.user == self.user
-        errors.add(:user, "cannot like/dislike his own posts")
+        errors.add(:user, 'cannot like/dislike his own posts')
       end
     end
 end

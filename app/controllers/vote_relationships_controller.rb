@@ -4,7 +4,7 @@ class VoteRelationshipsController < ApplicationController
   def create
     @post = Post.find(params[:post_id])
     if @post.approved?
-      if params[:like] == "1"
+      if params[:like] == '1'
         current_user.like(@post)
         update_vote
       else
@@ -12,7 +12,7 @@ class VoteRelationshipsController < ApplicationController
         update_vote
       end
     else
-      raise "Post is not approved"
+      raise 'Post is not approved'
     end
     respond_to do |format|
       format.html
@@ -33,7 +33,7 @@ class VoteRelationshipsController < ApplicationController
   private
     def logged_in_user
       unless user_signed_in?
-        flash[:danger] = "Please login first!"
+        flash[:danger] = 'Please login first!'
         redirect_to new_user_session_url
       end
     end
