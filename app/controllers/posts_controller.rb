@@ -16,7 +16,7 @@ class PostsController < ApplicationController
     if @post.save
       flash[:info] = 'Your post is waiting to be reviewed by admins'
     else
-      flash[:danger] = "Can't post!"
+      flash[:danger] = 'Can\'t post!'
     end
     redirect_to current_user
   end
@@ -82,7 +82,7 @@ class PostsController < ApplicationController
 
     def admin
       unless current_user.admin?
-        flash[:danger] = "You don't have access to this page"
+        flash[:danger] = 'You don\'t have access to this page'
         redirect_to root_url 
       end
     end
