@@ -7,8 +7,8 @@ class User < ApplicationRecord
   has_many :posts
   validates :name, presence: true, on: :create
 
-  has_many :positive_relationships, -> { where(positive: true) }, class_name: "VoteRelationship", dependent: :destroy
-  has_many :negative_relationships, -> { where(positive: false) }, class_name: "VoteRelationship", dependent: :destroy
+  has_many :positive_relationships, -> { where(positive: true) }, class_name: 'VoteRelationship', dependent: :destroy
+  has_many :negative_relationships, -> { where(positive: false) }, class_name: 'VoteRelationship', dependent: :destroy
   has_many :liked_posts, through: :positive_relationships, source: :post
   has_many :disliked_posts, through: :negative_relationships, source: :post
 
